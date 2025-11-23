@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;500;700&family=Roboto:wght@400;700&display=swap');
+
+/* --- PALETA OFICIAL TOTAL TOOLS --- */
+$brand-cyan: #00a8cc;
+$brand-dark: #1a1a1a; /* Negro casi puro */
+$brand-gray: #2d2d2d;
+$text-light: #ffffff;
+
+ion-content {
+  --background: #{$brand-dark};
+  /* Un fondo con textura sutil (gradiente) para que no sea plano */
+  --background: radial-gradient(circle at top right, #2c3e50 0%, #000000 100%);
+}
+
+.welcome-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Separa contenido arriba y botones abajo */
+  padding: 40px 25px;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- DECORACIÓN DE FONDO --- */
+/* Círculos decorativos difuminados para dar ambiente */
+.bg-decoration {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba($brand-cyan, 0.15);
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+}
+
+.bg-decoration-2 {
+  position: absolute;
+  bottom: 100px;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background: rgba($brand-cyan, 0.1);
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: 0;
+}
+
+/* --- LOGO CENTRAL --- */
+.logo-section {
+  flex-grow: 1; /* Ocupa el espacio central */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-circle {
+  width: 120px;
+  height: 120px;
+  background: $brand-gray;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(0, 168, 204, 0.3); /* Resplandor Cian */
+  margin-bottom: 20px;
+  border: 2px solid $brand-cyan;
+
+  ion-icon {
+    font-size: 60px;
+    color: $brand-cyan;
+  }
+}
+
+.brand-name {
+  font-family: 'Teko', sans-serif; /* Fuente estilo industrial */
+  font-size: 52px;
+  line-height: 0.9;
+  color: $text-light;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  
+  span {
+    color: $brand-cyan;
+    font-weight: 700;
+  }
+}
+
+.brand-slogan {
+  font-family: 'Roboto', sans-serif;
+  color: #aaa;
+  font-size: 14px;
+  letter-spacing: 3px;
+  margin-top: 10px;
+  text-transform: uppercase;
+  border-top: 1px solid #333;
+  padding-top: 10px;
+  width: 80%;
+}
+
+/* --- SECCIÓN DE BOTONES --- */
+.actions-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn-option {
+  height: 65px;
+  --border-radius: 12px;
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  --box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  
+  /* Efecto al presionar */
+  transition: transform 0.1s;
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Botón Cliente (Principal) */
+.btn-customer {
+  --background: #{$brand-cyan};
+  --color: white;
+  --background-activated: #{darken(#00a8cc, 10%)};
+  
+  .btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    span { font-size: 18px; }
+    small { font-size: 10px; opacity: 0.8; font-weight: 400; }
+  }
+}
+
+/* Botón Admin (Secundario) */
+.btn-admin {
+  --background: transparent;
+  --border-color: #444;
+  --border-width: 2px;
+  --color: #888;
+  --background-activated: rgba(255,255,255,0.05);
+  margin-top: 10px;
+}
+
+.version-text {
+  text-align: center;
+  color: #444;
+  font-size: 10px;
+  margin-top: 10px;
+}

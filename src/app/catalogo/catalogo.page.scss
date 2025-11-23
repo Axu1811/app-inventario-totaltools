@@ -1,0 +1,59 @@
+/* --- COLORES --- */
+$brand-cyan: #00a8cc;
+$brand-dark: #202020;
+$whatsapp-green: #25D366;
+$excel-green: #1D6F42;
+$bg-light: #f2f4f8;
+
+.bg-catalogo { --background: #{$bg-light}; }
+
+/* HEADER & BUSCADOR */
+.brand-toolbar { --background: #{$brand-dark}; --color: white; }
+.brand-text { font-weight: 900; letter-spacing: 1px; font-style: italic; font-size: 18px; }
+.cart-btn { position: relative; --color: #{$brand-cyan}; .cart-dot { position: absolute; top: 5px; right: 0px; width: 18px; height: 18px; background: #{$brand-cyan}; border-radius: 50%; color: white; font-size: 10px; font-weight: bold; display: flex; align-items: center; justify-content: center; border: 2px solid #{$brand-dark}; } }
+.search-toolbar { --background: #{$brand-dark}; padding-bottom: 10px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; .custom-search { --background: white; --border-radius: 10px; --placeholder-color: #888; --icon-color: #{$brand-dark}; padding-inline-start: 10px; padding-inline-end: 10px; height: 45px; } }
+
+/* BANNER */
+.promo-banner { background: linear-gradient(135deg, #2d3436 0%, #000000 100%); margin: 15px; border-radius: 15px; padding: 20px; position: relative; overflow: hidden; height: 140px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); display: flex; align-items: center; .promo-content { z-index: 2; h3 { color: white; font-weight: 900; margin: 0; font-size: 20px; line-height: 1.1; } .cyan-text { color: $brand-cyan; } p { color: #ccc; font-size: 12px; margin-top: 5px; } } .promo-img { position: absolute; right: -20px; bottom: -20px; height: 160px; transform: rotate(-10deg); z-index: 1; } }
+
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; margin-top: 20px; h4 { margin: 0; font-weight: 800; color: #333; } .badge-count { background: #eee; padding: 2px 8px; border-radius: 10px; font-size: 10px; color: #666; font-weight: 700; } }
+
+/* TARJETAS */
+.product-grid { padding: 5px; }
+.product-card { margin: 5px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; position: relative; .badges { position: absolute; top: 8px; left: 8px; z-index: 10; .badge-stock { background: rgba(255, 255, 255, 0.9); color: #27ae60; font-size: 9px; padding: 3px 6px; border-radius: 4px; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.1); &.no-stock { color: #e74c3c; background: #ffebee; } } } .card-image { height: 130px; background: white; display: flex; align-items: center; justify-content: center; padding: 10px; img { max-height: 100%; object-fit: contain; } } .card-details { padding: 10px; background: white; .meta-row { margin-bottom: 5px; .sku { font-size: 9px; color: #aaa; background: #f5f5f5; padding: 2px 4px; border-radius: 3px; } } .product-name { font-size: 12px; color: #333; font-weight: 600; margin: 0 0 8px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; } .price-row { display: flex; justify-content: space-between; align-items: center; .price { font-size: 15px; font-weight: 800; color: $brand-dark; } .quote-btn { --background: #{$brand-dark}; --border-radius: 6px; height: 28px; font-size: 10px; font-weight: 700; --padding-inline-start: 8px; --padding-inline-end: 8px; } } } }
+
+/* --- ESTILOS DEL CARRITO (MODAL) --- */
+.cart-item {
+  --padding-start: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item-info {
+  width: 40%; /* Dejar espacio a los botones */
+  .cart-name { font-size: 13px; font-weight: 700; margin: 0 0 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cart-sku { font-size: 10px; color: #999; margin: 0; }
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 0;
+  margin-right: 10px;
+
+  ion-button { margin: 0; --color: #555; height: 30px; width: 30px; }
+  .qty-number { font-weight: 700; font-size: 14px; min-width: 20px; text-align: center; }
+}
+
+.info-text {
+  text-align: center; color: #666; font-size: 12px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+
+.excel-btn {
+  --background: #{$excel-green}; --border-radius: 12px; font-weight: 700; --box-shadow: 0 4px 15px rgba(29, 111, 66, 0.4); height: 50px; margin-bottom: 10px;
+}
+
+.empty-cart { text-align: center; margin-top: 50px; color: #aaa; ion-icon { font-size: 60px; margin-bottom: 10px; color: #ddd; } }
+.empty-state { text-align: center; margin-top: 50px; color: #aaa; ion-icon { font-size: 48px; margin-bottom: 10px; } }

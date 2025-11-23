@@ -1,0 +1,45 @@
+<ion-content>
+  <!-- Elementos decorativos de fondo -->
+  <div class="bg-decoration"></div>
+  <div class="bg-decoration-2"></div>
+
+  <div class="welcome-container animate__animated animate__fadeIn">
+    
+    <!-- CENTRO: LOGO Y MARCA -->
+    <div class="logo-section">
+      <div class="logo-circle animate__animated animate__zoomIn animate__delay-0.5s">
+        <ion-icon name="hammer"></ion-icon>
+      </div>
+      
+      <h1 class="brand-name">
+        TOTAL<br>
+        <span>TOOLS</span>
+      </h1>
+      
+      <p class="brand-slogan">One-Stop Tools Station</p>
+    </div>
+
+    <!-- ABAJO: ACCIONES -->
+    <div class="actions-section animate__animated animate__fadeInUp animate__delay-1s">
+      
+      <!-- Opción 1: Cliente (Grande y llamativa) -->
+      <ion-button expand="block" class="btn-option btn-customer" routerLink="/catalogo">
+        <ion-icon name="storefront-outline" slot="start" style="font-size: 24px;"></ion-icon>
+        <div class="btn-content">
+          <span>VER CATÁLOGO</span>
+          <small>Entrar como Cliente</small>
+        </div>
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+
+      <!-- Opción 2: Admin (Sutil) -->
+      <ion-button expand="block" fill="outline" class="btn-option btn-admin" routerLink="/home">
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        SOY ADMINISTRADOR
+      </ion-button>
+
+      <p class="version-text">v1.0.0 Total Tools App</p>
+    </div>
+
+  </div>
+</ion-content>

@@ -1,0 +1,138 @@
+/* COLORES */
+$cyan: #00a8cc;
+$dark: #202020;
+$gray-bg: #f0f2f5;
+$red: #ff4757;
+$green: #2ed573;
+$blue: #1e90ff;
+
+.bg-dashboard { --background: #{$gray-bg}; }
+.main-container { padding: 20px; padding-bottom: 80px; max-width: 800px; margin: 0 auto; }
+
+/* HEADER */
+.header-toolbar { --background: #{$dark}; --color: white; }
+.header-logo { display: flex; align-items: center; gap: 10px; ion-icon { color: $cyan; font-size: 22px; } span { font-size: 18px; } }
+.logout-btn { --color: #{$red}; }
+
+/* --- ESTADÍSTICAS (NUEVO) --- */
+.stats-row {
+  display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px;
+  /* Scroll horizontal en móviles pequeños */
+  &::-webkit-scrollbar { display: none; }
+}
+
+.stat-card-mini {
+  background: white; border-radius: 12px; padding: 10px; min-width: 110px; flex: 1; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  
+  .icon-box {
+    width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;
+    &.blue { background: rgba($blue, 0.1); color: $blue; }
+    &.green { background: rgba($green, 0.1); color: $green; }
+    &.red { background: rgba($red, 0.1); color: $red; }
+  }
+
+  .text-box {
+    display: flex; flex-direction: column;
+    .label { font-size: 9px; color: #999; font-weight: 700; text-transform: uppercase; }
+    .value { font-size: 16px; font-weight: 800; color: $dark; line-height: 1.1; }
+    .value.red-text { color: $red; }
+  }
+}
+
+/* --- FORMULARIO COMPACTO --- */
+.section-title h3 { font-size: 16px; font-weight: 800; color: #555; margin: 0 0 10px 5px; }
+
+.form-card {
+  border-radius: 16px; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin: 0 0 30px 0;
+}
+
+.input-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+.input-wrapper {
+  flex: 1 1 100px; 
+  &.flex-2 { flex: 2 1 200px; }
+  &.full-width { flex: 1 1 100%; }
+  label { display: block; font-size: 10px; font-weight: 700; color: #aaa; margin-bottom: 4px; text-transform: uppercase; }
+}
+
+.custom-input-box {
+  background: #f9f9f9; border: 1px solid #eee; border-radius: 8px; padding: 0 10px; height: 42px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+  ion-icon { color: #ccc; }
+  input { border: none; background: transparent; width: 100%; height: 100%; outline: none; font-weight: 600; color: $dark; font-size: 13px; }
+  &:focus-within { border-color: $cyan; background: white; ion-icon { color: $cyan; } }
+}
+
+.action-btn {
+  width: 100%; border: none; height: 45px; border-radius: 10px; font-weight: 700; font-size: 13px; margin-top: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  &.save { background: $dark; color: white; }
+  &:active { transform: scale(0.98); }
+}
+
+/* --- INVENTARIO --- */
+.inventory-header-row {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+  h2 { font-size: 18px; font-weight: 800; margin: 0; color: $dark; }
+}
+
+/* Buscador Personalizado */
+.search-wrapper {
+  background: white; border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; gap: 5px; width: 160px; transition: width 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  ion-icon { color: #aaa; }
+  input { border: none; outline: none; width: 100%; font-size: 13px; color: $dark; background: transparent; }
+  &:focus-within { width: 200px; ion-icon { color: $cyan; } }
+}
+
+.inventory-list { display: flex; flex-direction: column; gap: 10px; }
+
+.inventory-item {
+  background: white; border-radius: 12px; padding: 8px 10px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); border: 1px solid transparent; transition: all 0.2s;
+  &:hover { border-color: #e0e0e0; transform: translateY(-1px); }
+}
+
+.item-img {
+  width: 45px; height: 45px; background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 2px; flex-shrink: 0;
+  img { width: 100%; height: 100%; object-fit: contain; }
+}
+
+.item-info {
+  flex-grow: 1; min-width: 0;
+  .info-top { display: flex; gap: 8px; align-items: center; margin-bottom: 2px; }
+  .code { font-size: 9px; background: #eee; padding: 1px 4px; border-radius: 3px; color: #666; }
+  .price { color: $cyan; font-weight: 800; font-size: 11px; }
+  .name { margin: 0; font-size: 13px; font-weight: 700; color: $dark; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Control Stock */
+.stock-manager {
+  display: flex; align-items: center; gap: 5px; background: #f5f6f7; padding: 3px; border-radius: 8px;
+  
+  .mini-btn {
+    width: 24px; height: 24px; background: white; border: none; border-radius: 6px; color: #555; font-weight: bold; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    &:active { background: #eee; transform: scale(0.9); }
+    &.plus { color: $cyan; }
+  }
+
+  .stock-number {
+    width: 35px; border: none; background: transparent; text-align: center; font-weight: 800; font-size: 14px; color: $dark; outline: none; padding: 0;
+    &.low-stock { color: $red; }
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  }
+}
+
+.delete-btn {
+  background: transparent; border: none; width: 30px; height: 30px; border-radius: 50%; color: #ccc; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 5px;
+  &:hover { background: #ffebee; color: $red; }
+}
+
+.empty-msg { text-align: center; padding: 30px; color: #aaa; font-size: 13px; font-style: italic; }
+
+/* --- ESTILO PARA EL BOTÓN DE LIMPIAR (X) --- */
+.clear-icon {
+  color: #ccc;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: #ff4757; /* Se pone rojo al pasar el mouse */
+  }
+}

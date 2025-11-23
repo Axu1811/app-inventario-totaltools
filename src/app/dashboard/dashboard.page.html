@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <ion-title>
+      <div class="header-logo">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <span>Panel <strong>TotalTools</strong></span>
+      </div>
+    </ion-title>
+    
+    <ion-buttons slot="end">
+      <!-- CAMBIO AQUÍ: Ahora navega a /history -->
+      <ion-button routerLink="/history" color="light">
+        <ion-icon name="time-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      
+      <ion-button routerLink="/home" class="logout-btn">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-dashboard">
+  
+  <div class="main-container">
+
+    <!-- ESTADÍSTICAS -->
+    <div class="stats-row animate__animated animate__fadeInDown">
+      <div class="stat-card-mini">
+        <div class="icon-box blue"><ion-icon name="cube-outline"></ion-icon></div>
+        <div class="text-box"><span class="label">Total Items</span><span class="value">{{ fullInventory.length }}</span></div>
+      </div>
+      <div class="stat-card-mini">
+        <div class="icon-box green"><ion-icon name="cash-outline"></ion-icon></div>
+        <div class="text-box"><span class="label">Valor Stock</span><span class="value">S/. {{ totalValue | number:'1.0-0' }}</span></div>
+      </div>
+      <div class="stat-card-mini" *ngIf="lowStockCount > 0">
+        <div class="icon-box red"><ion-icon name="alert-circle-outline"></ion-icon></div>
+        <div class="text-box"><span class="label">Bajo Stock</span><span class="value red-text">{{ lowStockCount }}</span></div>
+      </div>
+    </div>
+
+    <!-- REGISTRO -->
+    <div class="form-section animate__animated animate__fadeIn">
+      <div class="section-title"><h3>Nuevo Ingreso</h3></div>
+      <ion-card class="form-card">
+        <ion-card-content>
+          <div class="input-grid">
+            <div class="input-wrapper">
+              <label>Código</label>
+              <div class="custom-input-box">
+                <ion-icon name="barcode-outline"></ion-icon>
+                <input [(ngModel)]="code" placeholder="SKU" type="text" (focus)="$event.target.select()">
+                <ion-icon *ngIf="code" name="close-circle" class="clear-icon" (click)="code = ''"></ion-icon>
+              </div>
+            </div>
+            <div class="input-wrapper flex-2">
+              <label>Producto</label>
+              <div class="custom-input-box">
+                <ion-icon name="pricetag-outline"></ion-icon>
+                <input [(ngModel)]="name" placeholder="Nombre" type="text" (focus)="$event.target.select()">
+                <ion-icon *ngIf="name" name="close-circle" class="clear-icon" (click)="name = ''"></ion-icon>
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <label>Precio</label>
+              <div class="custom-input-box">
+                <ion-icon name="cash-outline"></ion-icon>
+                <input [(ngModel)]="price" placeholder="0.00" type="number" (focus)="$event.target.select()">
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <label>Stock</label>
+              <div class="custom-input-box">
+                <ion-icon name="cube-outline"></ion-icon>
+                <input [(ngModel)]="stock" placeholder="0" type="number" (focus)="$event.target.select()">
+              </div>
+            </div>
+            <div class="input-wrapper full-width">
+              <label>Imagen</label>
+              <div class="custom-input-box">
+                <ion-icon name="image-outline"></ion-icon>
+                <input [(ngModel)]="image" placeholder="URL..." type="text" (focus)="$event.target.select()">
+                <ion-icon *ngIf="image" name="close-circle" class="clear-icon" (click)="image = ''"></ion-icon>
+              </div>
+            </div>
+          </div>
+          <button class="action-btn save" (click)="saveProduct()">
+            <ion-icon name="add-circle"></ion-icon> REGISTRAR
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- INVENTARIO -->
+    <div class="inventory-section animate__animated animate__fadeInUp">
+      <div class="inventory-header-row">
+        <h2>Inventario</h2>
+        <div class="search-wrapper">
+          <ion-icon name="search-outline"></ion-icon>
+          <input type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" (input)="filterInventory()" (focus)="$event.target.select()">
+          <ion-icon *ngIf="searchTerm" name="close-circle" class="clear-icon" (click)="searchTerm = ''; filterInventory()"></ion-icon>
+        </div>
+      </div>
+
+      <div class="inventory-list">
+        <div *ngIf="displayedInventory.length === 0 && fullInventory.length > 0" class="empty-msg">
+          <p>No hay coincidencias</p>
+        </div>
+
+        <div class="inventory-item" *ngFor="let p of displayedInventory">
+          <div class="item-img">
+            <img [src]="p.image" onError="this.src='https://via.placeholder.com/80'">
+          </div>
+          <div class="item-info">
+            <div class="info-top">
+              <span class="code">{{ p.code }}</span>
+              <span class="price">S/. {{ p.price }}</span>
+            </div>
+            <h4 class="name">{{ p.name }}</h4>
+          </div>
+          <div class="stock-manager">
+            <button class="mini-btn" (click)="adjustStockLocal(p, -1)">-</button>
+            <input type="number" [value]="p.stock" (change)="updateStock(p, $event)" (focus)="$event.target.select()" class="stock-number" [class.low-stock]="p.stock < 5">
+            <button class="mini-btn plus" (click)="adjustStockLocal(p, 1)">+</button>
+          </div>
+          <button class="delete-btn" (click)="confirmDelete(p)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
