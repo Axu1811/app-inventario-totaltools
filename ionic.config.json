@@ -1,7 +1,5 @@
 {
-  "name": "mini-tienda",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
+  "name": "app-inventario-totaltools",
+  "integrations": {},
+  "type": "angular"
 }

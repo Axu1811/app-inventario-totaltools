@@ -1,5 +1,17 @@
-export const environment = {
-  production: false,
+// Define Environment locally to avoid depending on a missing './environment.model' module
+export interface Environment {
+  production: boolean;
+  firebaseConfig: {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+  };
+}
+export const environment: Environment = {
+  production: true,
   firebaseConfig: {
     apiKey: "AIzaSyDoofX6Ez6c7fH9a2SjZ9LREyVcLiiTPRA",
     authDomain: "mini-tienda-tools.firebaseapp.com",

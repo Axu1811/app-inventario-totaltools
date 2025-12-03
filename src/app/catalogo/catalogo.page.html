@@ -1,7 +1,6 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="brand-toolbar">
+<ion-toolbar class="brand-toolbar">
     <ion-buttons slot="start">
-      <!-- CAMBIO AQUÍ: Ahora regresa a 'welcome' (Bienvenida), no al login -->
       <ion-button routerLink="/welcome" color="light">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
@@ -21,7 +20,7 @@
     <ion-searchbar 
       [(ngModel)]="searchTerm" 
       (ionInput)="filterProducts($event)" 
-      placeholder="Buscar código o herramienta..." 
+      placeholder="Buscar herramienta..." 
       class="custom-search"
       animated="true">
     </ion-searchbar>
@@ -34,53 +33,64 @@
   <div class="promo-banner animate__animated animate__fadeIn">
     <div class="promo-content">
       <h3>COTIZA TU <br><span class="cyan-text">EQUIPO</span></h3>
-      <p>Descarga tu pedido en Excel</p>
     </div>
-    <!-- Usamos la imagen segura que ya configuramos -->
     <img 
-      src="https://carbonestore.com/cdn/shop/products/TIDLI12206_1.png?v=1640191098"
+      src="https://images.unsplash.com/photo-1504148455328-c376907d081c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
       class="promo-img" 
-      alt="Taladro Total Tools"
-      onError="this.src='https://via.placeholder.com/150?text=Total+Tools'"
+      alt="Herramienta Total Tools"
+      onError="this.style.display='none'"
     >
   </div>
 
   <div class="section-header ion-padding-horizontal">
-    <h4>Productos</h4>
+    <h4>Productos Disponibles</h4>
     <span class="badge-count">{{ filteredProducts.length }} items</span>
   </div>
 
-  <ion-grid class="ion-no-padding product-grid">
+  <!-- ESTADOS VACÍOS -->
+  <div *ngIf="filteredProducts.length === 0 && allProducts.length > 0" class="empty-state">
+    <ion-icon name="search-outline"></ion-icon>
+    <p>No encontramos esa herramienta</p>
+  </div>
+  
+  <div *ngIf="allProducts.length === 0" class="empty-state">
+    <ion-icon name="hammer-outline"></ion-icon>
+    <p>Cargando catálogo...</p>
+  </div>
+
+<ion-grid class="ion-no-padding product-grid">
     <ion-row>
       <ion-col size="6" size-md="4" *ngFor="let p of filteredProducts">
         
-        <ion-card class="product-card">
-          <div class="badges">
-            <span class="badge-stock" [class.no-stock]="p.stock < 1">
-              {{ p.stock > 0 ? 'Stock: ' + p.stock : 'AGOTADO' }}
-            </span>
+        <div class="modern-card animate__animated animate__fadeInUp">
+          
+          <div class="floating-badge" [class.no-stock]="p.stock < 1">
+            <ion-icon name="cube-outline" *ngIf="p.stock > 0"></ion-icon>
+            <ion-icon name="alert-circle-outline" *ngIf="p.stock < 1"></ion-icon>
+            <span>{{ p.stock > 0 ? p.stock : 'Agotado' }}</span>
           </div>
 
-          <div class="card-image">
-            <img [src]="p.image" onError="this.src='https://via.placeholder.com/150?text=Sin+Imagen'">
+          <div class="card-image-wrapper">
+            <img [src]="p.image" onError="this.src='https://via.placeholder.com/150/FFFFFF/CCCCCC?text=Sin+Foto'" alt="{{ p.name }}">
           </div>
 
-          <div class="card-details">
-            <div class="meta-row">
-              <span class="sku">{{ p.code }}</span>
-            </div>
-
-            <h3 class="product-name">{{ p.name }}</h3>
+          <div class="card-content">
+            <span class="sku-pill">{{ p.code }}</span>
+            <h3 class="product-title">{{ p.name }}</h3>
             
-            <div class="price-row">
-              <span class="price">S/.{{ p.price }}</span>
-              <ion-button size="small" class="quote-btn" [disabled]="p.stock < 1" (click)="addToQuote(p)">
-                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-                COTIZAR
+            <div class="action-footer">
+              <div class="price-group">
+                <span class="currency">S/.</span>
+                <span class="amount">{{ p.price }}</span>
+              </div>
+              
+              <ion-button class="add-btn-circle" [disabled]="p.stock < 1" (click)="addToQuote(p)">
+                <ion-icon name="add" slot="icon-only"></ion-icon>
               </ion-button>
             </div>
           </div>
-        </ion-card>
+
+        </div>
 
       </ion-col>
     </ion-row>
@@ -88,63 +98,103 @@
 
   <div style="height: 50px"></div>
 
-  <!-- MODAL DE COTIZACIÓN -->
-  <ion-modal [isOpen]="isModalOpen" (didDismiss)="setOpen(false)" [initialBreakpoint]="0.85" [breakpoints]="[0, 0.85, 1]">
+  <!-- --- MODAL DE COTIZACIÓN REDISEÑADO (MODIFICADO) --- -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="setOpen(false)" [initialBreakpoint]="0.90" [breakpoints]="[0, 0.5, 0.90, 1]" class="cart-modal">
     <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Tu Pedido</ion-title>
+      <!-- Cabecera del Modal -->
+      <ion-header class="ion-no-border">
+        <ion-toolbar color="light">
+          <ion-title class="ion-text-center">
+            <span class="title-text">Tu Pedido <span class="cyan-text">Total</span></span>
+          </ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+            <ion-button (click)="setOpen(false)" color="medium">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       
-      <ion-content class="ion-padding">
+      <!-- Contenido del Carrito -->
+      <ion-content class="cart-content ion-padding">
         
-        <div *ngIf="quoteCart.length === 0" class="empty-cart">
+        <!-- Carrito Vacío -->
+        <div *ngIf="quoteCart.length === 0" class="empty-cart-container">
           <ion-icon name="cart-outline"></ion-icon>
-          <p>Tu lista de cotización está vacía.</p>
+          <h3>Tu lista está vacía</h3>
+          <p>Agrega herramientas para cotizar</p>
+          <ion-button (click)="setOpen(false)" fill="solid" class="back-shop-btn">IR AL CATÁLOGO</ion-button>
         </div>
 
-        <ion-list *ngIf="quoteCart.length > 0">
-          <ion-item *ngFor="let item of quoteCart" lines="full" class="cart-item">
+        <!-- Lista de Items -->
+        <div class="cart-list" *ngIf="quoteCart.length > 0">
+          
+          <div class="cart-item-card" *ngFor="let item of quoteCart">
             
-            <div class="cart-item-info">
-              <h3 class="cart-name">{{ item.product.name }}</h3>
-              <p class="cart-sku">Código: {{ item.product.code }}</p>
+            <!-- Imagen Pequeña -->
+            <div class="item-thumb">
+              <img [src]="item.product.image" 
+                   onError="this.src='https://via.placeholder.com/50/EEE/666?text=Foto'" 
+                   alt="{{ item.product.code }}">
             </div>
 
-            <!-- CONTROL DE CANTIDAD -->
-            <div class="qty-control" slot="end">
-              <ion-button fill="clear" size="small" (click)="updateQuantity(item, -1)">
-                <ion-icon name="remove-circle-outline"></ion-icon>
-              </ion-button>
-              
-              <span class="qty-number">{{ item.quantity }}</span>
-              
-              <ion-button fill="clear" size="small" (click)="updateQuantity(item, 1)">
-                <ion-icon name="add-circle-outline"></ion-icon>
-              </ion-button>
+            <!-- Info -->
+            <div class="item-info">
+              <span class="item-sku">{{ item.product.code }}</span>
+              <h4 class="item-title">{{ item.product.name }}</h4>
+              <span class="item-price">S/. {{ item.product.price }} c/u</span>
             </div>
 
-            <ion-button fill="clear" color="danger" slot="end" (click)="removeFromQuote(item)">
-              <ion-icon name="trash-outline"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-list>
+            <!-- Controles y Borrar -->
+            <div class="item-actions">
+            <div class="qty-selector">
+                <ion-button class="qty-btn minus-btn" (click)="updateQuantity(item, -1)" [disabled]="item.quantity <= 1" fill="clear" size="small">
+                  <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+                </ion-button>
+                
+                <ion-input 
+                  type="number" 
+                  [(ngModel)]="item.quantity" 
+                  (ionBlur)="validateQuantity(item)"
+                  class="qty-value ion-text-center"
+                  min="1"
+                  inputmode="numeric"
+                  style="--padding-start:0; --padding-end:0; max-width: 50px;">
+                </ion-input>
+
+                <ion-button class="qty-btn plus-btn" (click)="updateQuantity(item, 1)" fill="clear" size="small">
+                  <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+                </ion-button>
+              </div>
+              
+              <button class="delete-item-btn" (click)="removeFromQuote(item)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
 
       </ion-content>
 
-      <ion-footer *ngIf="quoteCart.length > 0" class="ion-padding">
-        <p class="info-text">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          Descarga el Excel y adjúntalo en WhatsApp
-        </p>
+      <!-- Footer del Modal con Total y Botón de Acción -->
+      <ion-footer *ngIf="quoteCart.length > 0" class="ion-no-border cart-footer">
+        <div class="footer-details">
+            <div class="total-row">
+              <span>Items:</span>
+              <strong>{{ quoteCart.length }} productos</strong>
+            </div>
+            
+            <p class="whatsapp-note">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+              El pedido se enviará al chat de ventas
+            </p>
+        </div>
         
-        <ion-button expand="block" class="excel-btn" (click)="downloadExcel()">
+        <ion-button expand="block" class="final-action-btn" (click)="downloadExcel()">
           <ion-icon name="document-text-outline" slot="start"></ion-icon>
-          DESCARGAR EXCEL & ENVIAR
+          DESCARGAR & ENVIAR
         </ion-button>
       </ion-footer>
     </ng-template>
